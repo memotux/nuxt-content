@@ -5,16 +5,16 @@ import nodePreset from './node'
 export default definePreset({
   name: 'aws-amplify',
   parent: nodePreset,
-  async setup(options, nuxt) {
+  async setup(options) {
     options.database ||= { type: 'sqlite', filename: '/tmp/contents.sqlite' }
 
     // Fetching assets on server side is not working with AWS Amplify
     // Disable prerendering to avoid fetching assets on server side
-    Object.keys(nuxt.options.routeRules || {}).forEach((route) => {
-      if (route.startsWith('/__nuxt_content/') && route.endsWith('/sql_dump.txt')) {
-        nuxt.options.routeRules![route].prerender = false
-      }
-    })
+    // Object.keys(nuxt.options.routeRules || {}).forEach((route) => {
+    //   if (route.startsWith('/__nuxt_content/') && route.endsWith('/sql_dump.txt')) {
+    //     nuxt.options.routeRules![route].prerender = false
+    //   }
+    // })
 
     try {
       await import('sqlite3')
